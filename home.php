@@ -96,7 +96,7 @@ source VARCHAR(100) NOT NULL,
 destination VARCHAR(100) NOT NULL,
 date_of_ride DATE NOT NULL,
 time_of_ride TIME NOT NULL,
-number_plate VARCHAR(10) NOT NULL)";
+number_plate VARCHAR(10) REFERENCES rides(number_plate) ON DELETE CASCADE)";
 if ($conn->query($sql) !== TRUE)
 {
     echo "Error creating table: " . $conn->error;
@@ -110,7 +110,7 @@ date_of_ride DATE REFERENCES ride_owner_search(date_of_ride) ON DELETE CASCADE,
 time_of_ride TIME REFERENCES ride_owner_search(time_of_ride) ON DELETE CASCADE,
 source VARCHAR(100) REFERENCES passenger_search(source) ON DELETE CASCADE,
 destination VARCHAR(100) REFERENCES passenger_search(destination) ON DELETE CASCADE,
-trip_id VARCHAR(5) PRIMARY KEY)";
+trip_id VARCHAR(15) PRIMARY KEY)";
 if ($conn->query($sql) !== TRUE)
 {
     echo "Error creating table: " . $conn->error;
