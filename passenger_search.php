@@ -19,6 +19,10 @@ if(isset($_POST["passenger_search"]))
     $destination = $_POST["destination"];
     $date_of_ride = $_POST["date_of_ride"];
     $time_of_ride = $_POST["time_of_ride"];
+    $_SESSION["passenger_source"] = $source;
+    $_SESSION["passenger_destination"] = $destination;
+    $_SESSION["passenger_date_of_ride"] = $date_of_ride;
+    $_SESSION["passenger_time_of_ride"] = $time_of_ride;
     $sql = "INSERT INTO passenger_search VALUES('$passenger_id', '$source', '$destination', '$date_of_ride', '$time_of_ride')";
     if ($conn->query($sql) !== TRUE)
     {
