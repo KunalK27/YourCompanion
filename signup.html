@@ -178,7 +178,8 @@
               </a>
             </li>
 
-            <li class="nav-item"><a class="nav-link" href="signin.html">Sign In</a></li>
+            <li class="nav-item"><a class="nav-link" href="signin_passenger.html">Sign In: Passenger</a></li>
+            <li class="nav-item"><a class="nav-link" href="signin_ride_owner.html">Sign In: Ride Owner</a></li>
             <li class="nav-item active"><a class="nav-link" href="signup.html">Sign Up</a></li>
 
             <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
@@ -203,20 +204,20 @@
 
 
   <div class="form">
-    <form id="contactform">
+    <form id="contactform" method="post" action="action.php">
       <p class="contact"><label for="name">Full Name</label></p>
-      <input id="fname" name="name" placeholder="First and last name" required="" tabindex="1" type="text">
+      <input id="fname" name="fname" placeholder="First and last name" required="" tabindex="1" type="text">
 
       <p class="contact"><label for="email">Email</label></p>
       <input id="email" name="email" placeholder="example@domain.com" required type="email">
 
       <p class="contact"><label for="password">Create a password</label></p>
-      <input type="password" id="pw" name="password" required="" type="text"><br>
+      <input type="password" id="pw" name="pw" required="" type="text"><br>
      
       <p class="contact"><label for="date_of_birth">Date of Birth</label></p>
-      <input type="date" id="date_of_birth" name="date_of_birth">
+      <input type="date" id="date_of_birth" name="date_of_birth" required>
 
-      <select class="select-style gender" id="gender" name="gender">
+      <select class="select-style gender" id="gender" name="gender" required>
         <option value="select">Your Gender</option>
         <option value="m">Female</option>
         <option value="f">Male</option>
@@ -238,18 +239,18 @@
       <p class="contact"><label for="">Your Occupation</label></p>
       <input id="occupation" name="occupation" required="" type="text"> <br>
 
-      <select class="select-style marital_status" name="marital_status">
-        <option value="select">Marital Status</option>
+      <select class="select-style marital_status" name="marital_status" id="marital_status" required>
+        <option value="select">Current Marital Status</option>
         <option value="m">Married</option>
         <option value="f">Unmarried</option>
       </select><br><br>
 
       <p class="contact"><label for="">Select Profile Picture to upload:</label></p>
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="submit" value="Upload Image" name="submit">
+      <input type="file" name="pic" id="pic">
+      <input type="submit" value="Upload Image" name="submit" required>
 
       <label for="license_number">
-        <input type="checkbox" id="license_number" onclick="ShowHideDiv(this)" />
+        <input type="checkbox" name="license_number"id="license_number" onclick="ShowHideDiv(this)" required />
         Want to Register as a Ride Owner?
     </label>
     <hr />
