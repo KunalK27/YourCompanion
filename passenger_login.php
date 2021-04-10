@@ -39,7 +39,14 @@ if(isset($_POST["passenger_login"]))
             // IF EMAIL AND PASSWORDS MATCH
             if($row["email"] == $email && $row["pw"] == $pw)
             {
-                // REDIRECT TO ACCOUNT
+                // LOGIN SUCCESSFUL
+                session_start();
+                $sql = "SELECT passenger_id FROM passenger WHERE email='$email'";
+                $result = $conn->query($sql);
+                while($row = $result->fetch_assoc())
+                {
+                    $_SESSION["passenger_id"] = $row["passenger_id"];
+                }
                 header("Location: ");
             }
             else
