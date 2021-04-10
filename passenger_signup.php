@@ -14,6 +14,18 @@ if ($conn->connect_error)
 $pic_size = 500000;
 if(isset($_POST["passenger_signup"]))
 {
+    //CREATING A RANDOM PASSENGER ID
+    function passenger_id_generator()
+    {
+        $passenger_id = "PASS-";
+        $letters = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+        $random_keys = array_rand($letters, 10);
+        for($i = 0; $i < 10; $i = $i + 1)
+        {
+            $passenger_id = $passenger_id . $letters[$random_keys[$i]];
+        }
+        return $passenger_id;
+    }
     // GETTING VALUES FROM PASSENGER SIGN UP FORM
     $fname = $_POST["fname"];
     $date_of_birth = $_POST["date_of_birth"];
@@ -34,6 +46,7 @@ if(isset($_POST["passenger_signup"]))
     $passenger_pic_ext = end($passenger_pic_info);
 
     $allowed_ext = array("jpg", "JPG", "png", "PNG", "jpeg", "JPEG", "pdf", "PDF");
+    $message = "";
 
     // CHECKING WHETHER USER EXISTS OR NOT BASED ON EMAIL, PHONE AND ADHAAR CARD
     $sql = "SELECT email, phone, adhaar FROM passenger WHERE email='$email' OR phone='$phone' OR adhaar='$adhaar'";
@@ -44,20 +57,9 @@ if(isset($_POST["passenger_signup"]))
         // INSERTING VALUES INPUT BY USER
         if($_FILES["pic"]["size"] < $passenger_pic_size && in_array($passenger_pic_ext, $allowed_ext))
         {
-            //CREATING A RANDOM PASSENGER ID
-            function passenger_id_generator()
-            {
-                $passenger_id = "PASS-";
-                $letters = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-                $random_keys = array_rand($letters, 10);
-                for($i = 0; $i < 10; $i = $i + 1)
-                {
-                    $passenger_id = $passenger_id . $letters[$random_keys[$i]];
-                }
-                return $passenger_id;
-            }
-            // CREATE A FOLDER 'PIC' TO SAVE PASSENGER PICS
-            move_uploaded_file($_FILES["pic"]["tmp_name"], "pic/" . $_FILES["pic"]["name"]);
+            $passenger_id = passenger_id_generator();
+            // CREATE A FOLDER 'PASSENGER' TO SAVE PASSENGER PICS
+            move_uploaded_file($_FILES["pic"]["tmp_name"], "passenger/" . $_FILES["pic"]["name"]);
             $sql = "INSERT INTO passenger(passenger_id, fname, date_of_birth, gender, email, pw, phone, locality, city, states, pincode, adhaar, occupation, martial_status, pic) VALUES ('$passenger_id', '$fname', '$date_of_birth', '$gender', '$email', '$pw', '$phone', '$locality', '$city', '$states', '$pincode', '$adhaar', '$occupation', '$martial_status', '$pic')";
             if ($conn->query($sql) !== TRUE)
             {
@@ -92,14 +94,7 @@ if(isset($_POST["passenger_signup"]))
                     // INSERTING VALUES INPUT BY USER
                     if($_FILES["pic"]["size"] < $pic_size && in_array($passenger_pic_ext, $allowed_ext))
                     {
-                        //CREATING A RANDOM PASSENGER ID
-                        $passenger_id = "";
-                        $letters = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-                        $random_keys = array_rand($letters, 10);
-                        for($i = 0; $i < 10; $i = $i + 1)
-                        {
-                            $passenger_id = $passenger_id . $letters[$random_keys[$i]];
-                        }
+                        $passenger_id = passenger_id_generator();
                         // CREATE A FOLDER 'PIC' TO SAVE PASSENGER PICS
                         move_uploaded_file($_FILES["pic"]["tmp_name"], "pic/" . $_FILES["pic"]["name"]);
                         $sql = "INSERT INTO passenger(passenger_id, fname, date_of_birth, gender, email, pw, phone, locality, city, states, pincode, adhaar, occupation, martial_status, pic) VALUES ('$passenger_id', '$fname', '$date_of_birth', '$gender', '$email', '$pw', '$phone', '$locality', '$city', '$states', '$pincode', '$adhaar', '$occupation', '$martial_status', '$pic')";
