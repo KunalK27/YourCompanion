@@ -36,6 +36,11 @@ if(isset($_POST["ride_owner_search"]))
             if($row["number_plate"] == $number_plate)
             {
                 $sql = "INSERT INTO ride_owner_search VALUES('$ride_owner_id', '$source', '$destination', '$date_of_ride', '$time_of_ride', '$number_plate')";
+                $_SESSION["ride_owner_source"] = $source;
+                $_SESSION["ride_owner_destination"] = $destination;
+                $_SESSION["ride_owner_date_of_ride"] = $date_of_ride;
+                $_SESSION["ride_owner_time_of_ride"] = $time_of_ride;
+                $_SESSION["number_plate"] = $number_plate;
                 if ($conn->query($sql) !== TRUE)
                 {
                     echo "Error inserting values: " . $conn->error;
