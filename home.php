@@ -27,7 +27,8 @@ if ($conn->connect_error)
 
 // CREATING TABLES
 // PASSENGER
-$sql = "CREATE TABLE passenger(passenger_id VARCHAR(15) PRIMARY KEY,
+$sql = "CREATE TABLE passenger(
+passenger_id VARCHAR(15) PRIMARY KEY,
 fname VARCHAR(50) NOT NULL,
 date_of_birth DATE NOT NULL,
 gender INT(1) NOT NULL,
@@ -47,7 +48,8 @@ if ($conn->query($sql) !== TRUE)
     echo "Error creating table: " . $conn->error;
 }
 // RIDE OWNER
-$sql = "CREATE TABLE ride_owner(ride_owner_id VARCHAR(15) PRIMARY KEY,
+$sql = "CREATE TABLE ride_owner(
+ride_owner_id VARCHAR(15) PRIMARY KEY,
 fname VARCHAR(50) NOT NULL,
 date_of_birth DATE NOT NULL,
 gender INT(1) NOT NULL,
@@ -68,7 +70,8 @@ if ($conn->query($sql) !== TRUE)
     echo "Error creating table: " . $conn->error;
 }
 // RIDES
-$sql = "CREATE TABLE rides(ride_owner_id VARCHAR(15) REFERENCES ride_owner(ride_owner_id) ON DELETE CASCADE,
+$sql = "CREATE TABLE rides(
+ride_owner_id VARCHAR(15) REFERENCES ride_owner(ride_owner_id) ON DELETE CASCADE,
 ride VARCHAR(20) NOT NULL,
 number_plate VARCHAR(10) PRIMARY KEY)";
 if ($conn->query($sql) !== TRUE)
@@ -76,7 +79,8 @@ if ($conn->query($sql) !== TRUE)
     echo "Error creating table: " . $conn->error;
 }
 // PASSENGER SEARCH
-$sql = "CREATE TABLE passenger_search(passenger_id VARCHAR(15) PRIMARY KEY REFERENCES passenger(passenger_id) ON DELETE CASCADE,
+$sql = "CREATE TABLE passenger_search(
+passenger_id VARCHAR(15) PRIMARY KEY REFERENCES passenger(passenger_id) ON DELETE CASCADE,
 source VARCHAR(100) NOT NULL,
 destination VARCHAR(100) NOT NULL,
 date_of_ride DATE NOT NULL,
@@ -86,23 +90,27 @@ if ($conn->query($sql) !== TRUE)
     echo "Error creating table: " . $conn->error;
 }
 // RIDE OWNER SEARCH
-$sql = "CREATE TABLE ride_owner_search(ride_owner_id VARCHAR(15) PRIMARY KEY REFERENCES ride_owner(ride_owner_id) ON DELETE CASCADE,
+$sql = "CREATE TABLE ride_owner_search(
+ride_owner_id VARCHAR(15) PRIMARY KEY REFERENCES ride_owner(ride_owner_id) ON DELETE CASCADE,
 source VARCHAR(100) NOT NULL,
 destination VARCHAR(100) NOT NULL,
 date_of_ride DATE NOT NULL,
-time_of_ride TIME NOT NULL)";
+time_of_ride TIME NOT NULL,
+number_plate VARCHAR(10) NOT NULL)";
 if ($conn->query($sql) !== TRUE)
 {
     echo "Error creating table: " . $conn->error;
 }
 // TRIP
-$sql = "CREATE TABLE trip(ride_owner_id VARCHAR(15) REFERENCES ride_owner(ride_owner_id) ON DELETE CASCADE,
+$sql = "CREATE TABLE trip(
+ride_owner_id VARCHAR(15) REFERENCES ride_owner(ride_owner_id) ON DELETE CASCADE,
 passenger_id VARCHAR(15) REFERENCES passenger(passenger_id) ON DELETE CASCADE,
-numberplate VARCHAR(20) REFERENCES rides(number_plate) ON DELETE CASCADE,
+number_plate VARCHAR(10) REFERENCES rides(number_plate) ON DELETE CASCADE,
 date_of_ride DATE REFERENCES ride_owner_search(date_of_ride) ON DELETE CASCADE,
 time_of_ride TIME REFERENCES ride_owner_search(time_of_ride) ON DELETE CASCADE,
 source VARCHAR(100) REFERENCES passenger_search(source) ON DELETE CASCADE,
-destination VARCHAR(100) REFERENCES passenger_search(destination) ON DELETE CASCADE)";
+destination VARCHAR(100) REFERENCES passenger_search(destination) ON DELETE CASCADE,
+trip_id VARCHAR(5) PRIMARY KEY)";
 if ($conn->query($sql) !== TRUE)
 {
     echo "Error creating table: " . $conn->error;
